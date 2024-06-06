@@ -1,9 +1,11 @@
 import 'package:device_preview/device_preview.dart';
 import 'package:flutter/material.dart';
+import 'package:glide_web/themes/app_text_style.dart';
 import 'package:glide_web/themes/appbar_style.dart';
 import 'package:glide_web/themes/textfield_style.dart';
 import 'package:glide_web/utils/app_color.dart';
 import 'package:glide_web/utils/routes.dart';
+import 'package:glide_web/viewModels/news_view_model.dart';
 import 'package:glide_web/viewModels/web_view_model.dart';
 import 'package:provider/provider.dart';
 
@@ -16,6 +18,9 @@ class GlideWeb extends StatelessWidget {
       providers: [
         ChangeNotifierProvider(
           create: (context) => WebViewModel(),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => NewsViewModel(),
         ),
       ],
       child: MaterialApp(
@@ -30,6 +35,7 @@ class GlideWeb extends StatelessWidget {
           scaffoldBackgroundColor: AppColor.scaffoldBackgroundColor,
           appBarTheme: AppbarStyle.getAppbarStyle(),
           inputDecorationTheme: TextFieldStyle.getTextFieldStyle(),
+          textTheme: AppTextStyle.getTextTheme()
         ),
       ),
     );

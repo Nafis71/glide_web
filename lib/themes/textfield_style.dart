@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:glide_web/utils/app_color.dart';
 
 class TextFieldStyle{
   static InputDecorationTheme getTextFieldStyle()=> InputDecorationTheme(
-      fillColor: Colors.green.shade100,
+      fillColor: AppColor.webScreenTextFieldColor,
       filled: true,
       enabledBorder: OutlineInputBorder(
           borderSide: BorderSide.none,
