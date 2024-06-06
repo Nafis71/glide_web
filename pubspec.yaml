@@ -41,6 +41,7 @@ dependencies:
   flutter_svg: ^2.0.10+1
   http: ^1.2.1
   speech_to_text: ^6.6.0
+  page_transition: ^2.1.0
 
 dev_dependencies:
   flutter_test:
