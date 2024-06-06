@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:gap/gap.dart';
+import 'package:glide_web/utils/app_strings.dart';
 import 'package:glide_web/viewModels/web_view_model.dart';
 import 'package:glide_web/views/widgets/mic_alert_dialog.dart';
 import 'package:provider/provider.dart';
@@ -190,8 +191,8 @@ class _WebViewScreenState extends State<WebViewScreen> {
             }
             return MicAlertDialog(
               titleTextWidget: (!isMicPressed)
-                  ? Text("Talk", style: Theme.of(context).textTheme.titleLarge)
-                  : Text("Listening..",
+                  ? Text(AppStrings.micAlertDialogTitleTextTalk, style: Theme.of(context).textTheme.titleLarge)
+                  : Text(AppStrings.micAlertDialogTitleTextListening,
                       style: Theme.of(context).textTheme.titleLarge),
               contentTextWidget:
                   (!isMicPressed) ? Text(recognizedWords) : const Text(""),

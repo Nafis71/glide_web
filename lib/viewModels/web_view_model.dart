@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/foundation.dart';
+import 'package:glide_web/utils/app_strings.dart';
 import 'package:speech_to_text/speech_recognition_result.dart';
 import 'package:speech_to_text/speech_to_text.dart';
 
@@ -43,7 +44,7 @@ class WebViewModel extends ChangeNotifier {
 
   String processUrl(String url){
     if(!url.contains(".")){
-      return "https://www.google.com/search?q=$url";
+      return "${AppStrings.searchUrlPrefix}$url";
     }else{
       return "https://$url";
     }

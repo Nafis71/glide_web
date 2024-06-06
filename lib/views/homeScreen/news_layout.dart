@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
+import 'package:glide_web/utils/app_strings.dart';
 import 'package:glide_web/utils/routes.dart';
 import 'package:glide_web/viewModels/web_view_model.dart';
 import 'package:provider/provider.dart';
@@ -39,7 +40,7 @@ class NewsLayout extends StatelessWidget {
                               image: DecorationImage(
                                   image: NetworkImage(viewModel
                                           .articles[index].urlToImage ??
-                                      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSM4sEG5g9GFcy4SUxbzWNzUTf1jMISTDZrTw&s"),
+                                      AppStrings.noImageLink),
                                   fit: BoxFit.fitHeight),
                               borderRadius: BorderRadius.circular(25),
                             ),

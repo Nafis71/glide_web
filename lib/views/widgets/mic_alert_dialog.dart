@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:glide_web/utils/app_strings.dart';
 import 'package:glide_web/viewModels/web_view_model.dart';
 
 class MicAlertDialog extends StatelessWidget {
@@ -38,7 +39,7 @@ class MicAlertDialog extends StatelessWidget {
             cancelFunction();
           },
           child: const Text(
-            "Cancel",
+            AppStrings.micAlertDialogCancelText,
             style: TextStyle(color: Colors.black),
           ),
         ),
@@ -48,7 +49,7 @@ class MicAlertDialog extends StatelessWidget {
             Navigator.pop(context);
           },
           child: const Text(
-            "Search",
+            AppStrings.micAlertDialogSearchText,
             style: TextStyle(color: Colors.black),
           ),
         ),
