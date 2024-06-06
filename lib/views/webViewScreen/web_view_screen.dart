@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
-import 'package:glide_web/utils/routes.dart';
+import 'package:gap/gap.dart';
 import 'package:glide_web/viewModels/web_view_model.dart';
 import 'package:provider/provider.dart';
 
@@ -29,53 +29,72 @@ class _WebViewScreenState extends State<WebViewScreen> {
         title: Row(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            IconButton(
-                onPressed: () {
-                  Navigator.pushNamed(context, Routes.homeScreen);
-                },
-                icon: const Icon(
-                  Icons.home_outlined,
-                  size: 27,
-                )),
+            InkWell(
+              splashColor: Colors.transparent,
+              onTap: () {
+                Navigator.pop(context);
+              },
+              child: const Icon(
+                Icons.home_outlined,
+                size: 27,
+              ),
+            ),
+            const Gap(5),
             SizedBox(
               height: 40,
-              width: screenWidth * 0.5,
+              width: screenWidth * 0.55,
               child: TextField(
+                style: const TextStyle(
+                  fontSize: 14.5
+                ),
                 controller: urlController,
                 onSubmitted: (value) {
-                  if(value.isNotEmpty){
+                  if (value.isNotEmpty) {
                     _webViewController.loadUrl(
                         urlRequest: URLRequest(
                             url: WebUri("https://${urlController.text}")));
                   }
                 },
-                onTap: (){
+                onTap: () {
                   urlController.clear();
                 },
                 onTapOutside: (value) {
-                  urlController.text =  context.read<WebViewModel>().url;
+                  urlController.text = context.read<WebViewModel>().url;
                   FocusScope.of(context).unfocus();
                 },
                 decoration: const InputDecoration(
-                    prefixIcon: Icon(Icons.tune_outlined)),
+                    prefixIcon: Icon(Icons.network_check_rounded,size: 20,)),
               ),
             ),
           ],
         ),
         actions: [
-          IconButton(
-              onPressed: () {},
-              icon: const Icon(
-                Icons.mic_outlined,
-                size: 26,
-              )),
-          IconButton(
-            onPressed: () {},
-            icon: const Icon(
-              Icons.more_vert,
-              size: 26,
-            ),
+          InkWell(
+            splashColor: Colors.transparent,
+            onTap: () {
+              _webViewController.loadUrl(
+                  urlRequest: URLRequest(url: WebUri(urlController.text)));
+            },
+            child: const Icon(Icons.refresh),
           ),
+          const Gap(8),
+          Consumer<WebViewModel>(builder: (_,viewModel,__){
+            if(viewModel.hasFinishedTalking){
+              urlController.text = viewModel.url;
+              _webViewController.loadUrl(urlRequest: URLRequest(url: WebUri(viewModel.url)));
+              viewModel.hasFinishedTalking = false;
+            }
+            return InkWell(
+              splashColor: Colors.transparent,
+              onTap: () async{
+                await viewModel.initSpeech();
+              },
+              child: const Icon(Icons.mic_outlined),
+            );
+          }),
+          const Gap(8),
+          const Icon(Icons.more_vert),
+          const Gap(8),
         ],
         automaticallyImplyLeading: false,
       ),
@@ -84,14 +103,13 @@ class _WebViewScreenState extends State<WebViewScreen> {
           Consumer<WebViewModel>(builder: (_, viewModel, __) {
             return InAppWebView(
               initialUrlRequest: URLRequest(
-                  url: WebUri(viewModel.url,
-                      forceToStringRawValue: false)),
+                  url: WebUri(viewModel.url, forceToStringRawValue: false)),
               initialSettings: InAppWebViewSettings(
                   cacheEnabled: true,
                   javaScriptEnabled: true,
                   useOnDownloadStart: true,
                   mediaPlaybackRequiresUserGesture: false,
-                  supportZoom: false,
+                  supportZoom: true,
                   useShouldOverrideUrlLoading: false),
               onWebViewCreated: (controller) {
                 _webViewController = controller;
@@ -122,5 +140,12 @@ class _WebViewScreenState extends State<WebViewScreen> {
         ],
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    _webViewController.dispose();
+    urlController.dispose();
+    super.dispose();
   }
 }

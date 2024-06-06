@@ -4,4 +4,5 @@ class AppStrings{
 
   static const String homeScreenSearchFieldHint = "Type to glide the internet";
   static const String unknownErrorText = "Unknown Error Occurred";
+  static const String topNewsHeader = "Top News";
 }

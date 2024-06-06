@@ -13,6 +13,6 @@ class TextFieldStyle{
         borderSide: BorderSide.none,
         borderRadius: BorderRadius.circular(30)
     ),
-    contentPadding: const EdgeInsets.all(6)
+    contentPadding: const EdgeInsets.all(3)
   );
 }
