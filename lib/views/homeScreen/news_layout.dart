@@ -30,7 +30,7 @@ class NewsLayout extends StatelessWidget {
                         InkWell(
                           splashColor: Colors.transparent,
                           onTap: (){
-                            webViewModel.setUrl = viewModel.articles[index].url.toString();
+                            webViewModel.setUrl = webViewModel.processUrl(viewModel.articles[index].url.toString());
                             Navigator.pushNamed(context, Routes.webViewScreen);
                           },
                           child: Container(

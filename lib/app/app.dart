@@ -1,4 +1,3 @@
-import 'package:device_preview/device_preview.dart';
 import 'package:flutter/material.dart';
 import 'package:glide_web/themes/app_text_style.dart';
 import 'package:glide_web/themes/appbar_style.dart';
@@ -25,8 +24,6 @@ class GlideWeb extends StatelessWidget {
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
-        locale: DevicePreview.locale(context),
-        builder: DevicePreview.appBuilder,
         initialRoute: Routes.homeScreen,
         onGenerateRoute: (routeSettings) {
           return Routes.generateRoute(routeSettings);

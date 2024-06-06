@@ -45,7 +45,10 @@ class WebViewModel extends ChangeNotifier {
   String processUrl(String url){
     if(!url.contains(".")){
       return "${AppStrings.searchUrlPrefix}$url";
-    }else{
+    } else if(url.contains("https://")){
+      return url;
+    }
+    else{
       return "https://$url";
     }
   }
