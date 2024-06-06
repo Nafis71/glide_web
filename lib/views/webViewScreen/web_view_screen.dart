@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:gap/gap.dart';
+import 'package:glide_web/utils/app_color.dart';
 import 'package:glide_web/viewModels/web_view_model.dart';
 import 'package:glide_web/views/widgets/mic_alert_dialog.dart';
 import 'package:provider/provider.dart';
@@ -139,7 +140,7 @@ class _WebViewScreenState extends State<WebViewScreen> {
                 return LinearProgressIndicator(
                   color: Colors.white,
                   value: viewModel.progress,
-                  valueColor: const AlwaysStoppedAnimation<Color>(Colors.green),
+                  valueColor: const AlwaysStoppedAnimation<Color>(Colors.cyan),
                 );
               }
               return const SizedBox.shrink();
@@ -196,9 +197,13 @@ class _WebViewScreenState extends State<WebViewScreen> {
               micIconWidget: (!isMicPressed)
                   ? const Icon(
                       Icons.mic_none_outlined,
-                      size: 40,
+                      size: 45,
                     )
-                  : const Icon(Icons.mic_outlined, size: 40),
+                  : const Icon(Icons.mic_outlined, size: 45),
+              cancelFunction: () {
+                recognizedWords = "";
+                Navigator.pop(context);
+              },
             );
           },
         );

@@ -3,7 +3,7 @@ import 'package:glide_web/viewModels/web_view_model.dart';
 
 class MicAlertDialog extends StatelessWidget {
   final Widget titleTextWidget, contentTextWidget, micIconWidget;
-  final Function micOnPressed;
+  final Function micOnPressed,cancelFunction;
   final WebViewModel webViewModel;
 
   const MicAlertDialog(
@@ -12,7 +12,7 @@ class MicAlertDialog extends StatelessWidget {
       required this.contentTextWidget,
       required this.micOnPressed,
       required this.webViewModel,
-      required this.micIconWidget});
+      required this.micIconWidget, required this.cancelFunction});
 
   @override
   Widget build(BuildContext context) {
@@ -34,11 +34,25 @@ class MicAlertDialog extends StatelessWidget {
       ),
       actions: [
         TextButton(
-            onPressed: () {
-              webViewModel.loadVoiceUrl();
-              Navigator.pop(context);
-            },
-            child: const Text("Search"))
+          onPressed: () {
+            cancelFunction();
+          },
+          child: const Text(
+            "Cancel",
+            style: TextStyle(color: Colors.black),
+          ),
+        ),
+        TextButton(
+          onPressed: () {
+            webViewModel.loadVoiceUrl();
+            Navigator.pop(context);
+          },
+          child: const Text(
+            "Search",
+            style: TextStyle(color: Colors.black),
+          ),
+        ),
+
       ],
     );
   }

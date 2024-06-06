@@ -11,16 +11,16 @@ class BookmarkLayout extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return   SizedBox(
+    return SizedBox(
       height: 100,
-      width: MediaQuery.of(context).size.width *0.9,
+      width: MediaQuery.of(context).size.width * 0.9,
       child: ListView.separated(
           scrollDirection: Axis.horizontal,
-          itemBuilder: (context,index){
-            return Consumer<WebViewModel>(builder: (_,viewModel,__){
+          itemBuilder: (context, index) {
+            return Consumer<WebViewModel>(builder: (_, viewModel, __) {
               return InkWell(
-                splashColor : Colors.transparent,
-                onTap: (){
+                splashColor: Colors.transparent,
+                onTap: () {
                   viewModel.setUrl = bookmarkModels[index]["url"]!;
                   Navigator.pushNamed(context, Routes.webViewScreen);
                 },
@@ -31,15 +31,25 @@ class BookmarkLayout extends StatelessWidget {
                       child: SizedBox(
                         height: 40,
                         width: 40,
-                        child: Image.asset(bookmarkModels[index]["logo"]!,fit: BoxFit.cover,),
+                        child: Image.asset(
+                          bookmarkModels[index]["logo"]!,
+                          fit: BoxFit.cover,
+                        ),
                       ),
                     ),
-                    Text(bookmarkModels[index]["name"]!,style: const TextStyle(fontSize: 13),)
+                    Text(
+                      bookmarkModels[index]["name"]!,
+                      style: const TextStyle(fontSize: 13),
+                    )
                   ],
                 ),
               );
             });
-          }, separatorBuilder: (context,index){ return const Gap(10);}, itemCount: bookmarkModels.length),
+          },
+          separatorBuilder: (context, index) {
+            return const Gap(10);
+          },
+          itemCount: bookmarkModels.length),
     );
   }
 }

@@ -42,13 +42,6 @@ class NewsLayout extends StatelessWidget {
                                       "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSM4sEG5g9GFcy4SUxbzWNzUTf1jMISTDZrTw&s"),
                                   fit: BoxFit.fitHeight),
                               borderRadius: BorderRadius.circular(25),
-                              boxShadow: [
-                                BoxShadow(
-                                    color: Colors.black.withOpacity(0.15),
-                                    spreadRadius: 3,
-                                    blurRadius: 20,
-                                    offset: const Offset(0, 4)),
-                              ],
                             ),
                           ),
                         ),
