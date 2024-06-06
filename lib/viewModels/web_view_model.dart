@@ -20,11 +20,7 @@ class WebViewModel extends ChangeNotifier {
   String get url => _url;
 
   set setUrl(String url) {
-    if (!url.contains("https://")) {
-      _url = "https://$url";
-    } else {
-      _url = url;
-    }
+    _url = url;
   }
 
   Future<void> initSpeech() async {
@@ -42,7 +38,15 @@ class WebViewModel extends ChangeNotifier {
     recognizedWords = result.recognizedWords;
     List<String> listOfStrings = recognizedWords.split(RegExp(r"\W+"));
     String joinedStrings = listOfStrings.join("+");
-    _url = "https://www.google.com/search?q=$joinedStrings";
+    _url = processUrl(joinedStrings);
+  }
+
+  String processUrl(String url){
+    if(!url.contains(".")){
+      return "https://www.google.com/search?q=$url";
+    }else{
+      return "https://$url";
+    }
   }
 
   void loadVoiceUrl(){

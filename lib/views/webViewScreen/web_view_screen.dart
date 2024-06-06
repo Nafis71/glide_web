@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:gap/gap.dart';
-import 'package:glide_web/utils/app_color.dart';
 import 'package:glide_web/viewModels/web_view_model.dart';
 import 'package:glide_web/views/widgets/mic_alert_dialog.dart';
 import 'package:provider/provider.dart';
@@ -56,7 +55,7 @@ class _WebViewScreenState extends State<WebViewScreen> {
                   if (value.isNotEmpty) {
                     _webViewController.loadUrl(
                         urlRequest: URLRequest(
-                            url: WebUri("https://${urlController.text}")));
+                            url: WebUri(context.read<WebViewModel>().processUrl(urlController.text))));
                   }
                 },
                 onTap: () {
@@ -105,18 +104,31 @@ class _WebViewScreenState extends State<WebViewScreen> {
         ],
         automaticallyImplyLeading: false,
       ),
-      body: Stack(
+      body:  PopScope(
+        canPop: false,
+        onPopInvoked: (bool isPop) async{
+          bool canGoBack =  await _webViewController.canGoBack();
+          if(canGoBack && mounted){
+            _webViewController.goBack();
+            return;
+          }
+          if(context.mounted && Navigator.canPop(context)){
+            Navigator.pop(context);
+          }
+        },
+        child: Stack(
         children: [
           Consumer<WebViewModel>(builder: (_, viewModel, __) {
             return InAppWebView(
               initialUrlRequest: URLRequest(
-                  url: WebUri(viewModel.url, forceToStringRawValue: false)),
+                  url: WebUri(viewModel.processUrl(viewModel.url), forceToStringRawValue: false)),
               initialSettings: InAppWebViewSettings(
                   cacheEnabled: true,
                   javaScriptEnabled: true,
                   useOnDownloadStart: true,
                   mediaPlaybackRequiresUserGesture: false,
                   supportZoom: true,
+                  allowBackgroundAudioPlaying: true,
                   useShouldOverrideUrlLoading: false),
               onWebViewCreated: (controller) {
                 _webViewController = controller;
@@ -148,6 +160,8 @@ class _WebViewScreenState extends State<WebViewScreen> {
           )
         ],
       ),
+
+      )
     );
   }
 
@@ -176,14 +190,9 @@ class _WebViewScreenState extends State<WebViewScreen> {
             }
             return MicAlertDialog(
               titleTextWidget: (!isMicPressed)
-                  ? Text(
-                      "Talk",
-                      style: Theme.of(context).textTheme.titleLarge,
-                    )
-                  : Text(
-                      "Listening..",
-                      style: Theme.of(context).textTheme.titleLarge,
-                    ),
+                  ? Text("Talk", style: Theme.of(context).textTheme.titleLarge)
+                  : Text("Listening..",
+                      style: Theme.of(context).textTheme.titleLarge),
               contentTextWidget:
                   (!isMicPressed) ? Text(recognizedWords) : const Text(""),
               micOnPressed: () {
