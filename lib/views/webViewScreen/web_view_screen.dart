@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:gap/gap.dart';
 import 'package:glide_web/viewModels/web_view_model.dart';
+import 'package:glide_web/views/widgets/mic_alert_dialog.dart';
 import 'package:provider/provider.dart';
 
 class WebViewScreen extends StatefulWidget {
@@ -13,7 +14,10 @@ class WebViewScreen extends StatefulWidget {
 
 class _WebViewScreenState extends State<WebViewScreen> {
   late final InAppWebViewController _webViewController;
+  final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
   final urlController = TextEditingController();
+  bool isMicPressed = false;
+  String recognizedWords = "";
 
   @override
   void initState() {
@@ -25,6 +29,7 @@ class _WebViewScreenState extends State<WebViewScreen> {
   Widget build(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;
     return Scaffold(
+      key: scaffoldKey,
       appBar: AppBar(
         title: Row(
           mainAxisAlignment: MainAxisAlignment.start,
@@ -42,11 +47,9 @@ class _WebViewScreenState extends State<WebViewScreen> {
             const Gap(5),
             SizedBox(
               height: 40,
-              width: screenWidth * 0.55,
+              width: screenWidth * 0.6,
               child: TextField(
-                style: const TextStyle(
-                  fontSize: 14.5
-                ),
+                style: const TextStyle(fontSize: 14.5),
                 controller: urlController,
                 onSubmitted: (value) {
                   if (value.isNotEmpty) {
@@ -63,7 +66,11 @@ class _WebViewScreenState extends State<WebViewScreen> {
                   FocusScope.of(context).unfocus();
                 },
                 decoration: const InputDecoration(
-                    prefixIcon: Icon(Icons.network_check_rounded,size: 20,)),
+                  prefixIcon: Icon(
+                    Icons.network_check_rounded,
+                    size: 20,
+                  ),
+                ),
               ),
             ),
           ],
@@ -77,24 +84,23 @@ class _WebViewScreenState extends State<WebViewScreen> {
             },
             child: const Icon(Icons.refresh),
           ),
-          const Gap(8),
-          Consumer<WebViewModel>(builder: (_,viewModel,__){
-            if(viewModel.hasFinishedTalking){
+          const Gap(15),
+          Consumer<WebViewModel>(builder: (_, viewModel, __) {
+            if (viewModel.hasFinishedTalking) {
               urlController.text = viewModel.url;
-              _webViewController.loadUrl(urlRequest: URLRequest(url: WebUri(viewModel.url)));
+              _webViewController.loadUrl(
+                  urlRequest: URLRequest(url: WebUri(viewModel.url)));
               viewModel.hasFinishedTalking = false;
             }
             return InkWell(
               splashColor: Colors.transparent,
-              onTap: () async{
-                await viewModel.initSpeech();
+              onTap: () async {
+                showAlertDialog();
               },
               child: const Icon(Icons.mic_outlined),
             );
           }),
-          const Gap(8),
-          const Icon(Icons.more_vert),
-          const Gap(8),
+          const Gap(15),
         ],
         automaticallyImplyLeading: false,
       ),
@@ -127,18 +133,76 @@ class _WebViewScreenState extends State<WebViewScreen> {
               },
             );
           }),
-          Consumer<WebViewModel>(builder: (_, viewModel, __) {
-            if (viewModel.isLoading) {
-              return LinearProgressIndicator(
-                color: Colors.white,
-                value: viewModel.progress,
-                valueColor: const AlwaysStoppedAnimation<Color>(Colors.green),
-              );
-            }
-            return const SizedBox.shrink();
-          })
+          Consumer<WebViewModel>(
+            builder: (_, viewModel, __) {
+              if (viewModel.isLoading) {
+                return LinearProgressIndicator(
+                  color: Colors.white,
+                  value: viewModel.progress,
+                  valueColor: const AlwaysStoppedAnimation<Color>(Colors.green),
+                );
+              }
+              return const SizedBox.shrink();
+            },
+          )
         ],
       ),
+    );
+  }
+
+  void showAlertDialog() {
+    recognizedWords = "";
+    final WebViewModel webViewModel =
+        Provider.of<WebViewModel>(context, listen: false);
+    showDialog(
+      context: context,
+      builder: (context) {
+        return StatefulBuilder(
+          builder: (context, setDialogState) {
+            if (isMicPressed) {
+              webViewModel.initSpeech();
+              Future.delayed(
+                const Duration(seconds: 4),
+                () {
+                  setDialogState(
+                    () {
+                      isMicPressed = false;
+                      recognizedWords = webViewModel.recognizedWords;
+                    },
+                  );
+                },
+              );
+            }
+            return MicAlertDialog(
+              titleTextWidget: (!isMicPressed)
+                  ? Text(
+                      "Talk",
+                      style: Theme.of(context).textTheme.titleLarge,
+                    )
+                  : Text(
+                      "Listening..",
+                      style: Theme.of(context).textTheme.titleLarge,
+                    ),
+              contentTextWidget:
+                  (!isMicPressed) ? Text(recognizedWords) : const Text(""),
+              micOnPressed: () {
+                setDialogState(
+                  () {
+                    isMicPressed = !isMicPressed;
+                  },
+                );
+              },
+              webViewModel: webViewModel,
+              micIconWidget: (!isMicPressed)
+                  ? const Icon(
+                      Icons.mic_none_outlined,
+                      size: 40,
+                    )
+                  : const Icon(Icons.mic_outlined, size: 40),
+            );
+          },
+        );
+      },
     );
   }
 

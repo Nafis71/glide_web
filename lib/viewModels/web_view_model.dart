@@ -8,6 +8,7 @@ class WebViewModel extends ChangeNotifier {
   bool _isLoading = false;
 
   bool hasFinishedTalking = false;
+  String recognizedWords = "";
 
   String _url = "";
   double _progress = 0.0;
@@ -38,13 +39,15 @@ class WebViewModel extends ChangeNotifier {
   }
 
   void onSpeechResult(SpeechRecognitionResult result) {
-    String recognizedWords = result.recognizedWords;
+    recognizedWords = result.recognizedWords;
     List<String> listOfStrings = recognizedWords.split(RegExp(r"\W+"));
     String joinedStrings = listOfStrings.join("+");
     _url = "https://www.google.com/search?q=$joinedStrings";
-    print(_url);
+  }
+
+  void loadVoiceUrl(){
     hasFinishedTalking = true;
-    notifyListeners();
+    setIsLoading(true, 0.0);
   }
 
   bool get isLoading => _isLoading;
