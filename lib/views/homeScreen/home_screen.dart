@@ -16,6 +16,11 @@ class _HomeScreenState extends State<HomeScreen> {
   final urlController = TextEditingController();
 
   @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;
     return Scaffold(
@@ -34,14 +39,22 @@ class _HomeScreenState extends State<HomeScreen> {
               width: screenWidth * 0.5,
               child: TextField(
                 controller: urlController,
-                onSubmitted: (value){
-                  _webViewController.loadUrl(urlRequest: URLRequest(url: WebUri("https://${urlController.text}")));
+                onSubmitted: (value) {
+                 if(value.isNotEmpty){
+                   _webViewController.loadUrl(
+                       urlRequest: URLRequest(
+                           url: WebUri("https://${urlController.text}")));
+                 }
                 },
-                onTapOutside: (value){
+                onTap: (){
+                  urlController.clear();
+                },
+                onTapOutside: (value) {
+                  urlController.text =  context.read<WebViewModel>().url;
                   FocusScope.of(context).unfocus();
                 },
-                decoration:
-                    const InputDecoration(prefixIcon: Icon(Icons.tune_outlined)),
+                decoration: const InputDecoration(
+                    prefixIcon: Icon(Icons.tune_outlined)),
               ),
             ),
           ],
@@ -83,12 +96,12 @@ class _HomeScreenState extends State<HomeScreen> {
                 viewModel.setUrl = url.toString();
                 urlController.text = url.toString();
               },
-              onProgressChanged: (controller,progress){
-                if(progress ==100){
-                  viewModel.setIsLoading(false, progress.toDouble()/100);
-                } else{
+              onProgressChanged: (controller, progress) {
+                if (progress == 100) {
+                  viewModel.setIsLoading(false, progress.toDouble() / 100);
+                } else {
                   print(progress);
-                  viewModel.setIsLoading(true, progress.toDouble()/100);
+                  viewModel.setIsLoading(true, progress.toDouble() / 100);
                 }
               },
             );
