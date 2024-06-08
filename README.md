@@ -23,8 +23,8 @@
 `1. Speech Recognition (search from voice command)` <br />
 1. Users can search anything using voice command
 <br />
-<img align="center" alt ="homePage" width ="300" src="https://github.com/Nafis71/glide_web/assets/57575805/cd9ed5bb-469c-41b9-b007-9f87046299be"></img>
-<img align="center" alt ="homePage" width ="300" src="https://github.com/Nafis71/glide_web/assets/57575805/2e4804c0-6768-4d50-8204-df07a5e0c2b6"></img>
-<img align="center" alt ="homePage" width ="300" src="https://github.com/Nafis71/glide_web/assets/57575805/cf0560ee-77fc-4ab4-bc75-ae64da95d70b"></img>
+<img align="center" alt ="homePage" width ="250" src="https://github.com/Nafis71/glide_web/assets/57575805/cd9ed5bb-469c-41b9-b007-9f87046299be"></img>
+<img align="center" alt ="homePage" width ="250" src="https://github.com/Nafis71/glide_web/assets/57575805/2e4804c0-6768-4d50-8204-df07a5e0c2b6"></img>
+<img align="center" alt ="homePage" width ="250" src="https://github.com/Nafis71/glide_web/assets/57575805/cf0560ee-77fc-4ab4-bc75-ae64da95d70b"></img>
 
 
