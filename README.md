@@ -14,9 +14,9 @@
 3. User can search randomly or put a specific url to visit via the addressbar.
 4. It can play youtube videos in background acting as a music player.
 <br />
-<img align="center" alt ="homePage" width ="300" src="https://github.com/Nafis71/glide_web/assets/57575805/4ebec537-4c28-4526-b646-4dcdbda4c7a0"></img>
-<img align="center" alt ="homePage" width ="300" src="https://github.com/Nafis71/glide_web/assets/57575805/dade2dd3-a373-49f6-ab7a-fa521cdffff9"></img>
-<img align="center" alt ="homePage" width ="300" src="https://github.com/Nafis71/glide_web/assets/57575805/1cf018e3-685c-4796-ac90-ec32a2a6ae27"></img>
+<img align="center" alt ="homePage" width ="250" src="https://github.com/Nafis71/glide_web/assets/57575805/4ebec537-4c28-4526-b646-4dcdbda4c7a0"></img>
+<img align="center" alt ="homePage" width ="250" src="https://github.com/Nafis71/glide_web/assets/57575805/dade2dd3-a373-49f6-ab7a-fa521cdffff9"></img>
+<img align="center" alt ="homePage" width ="250" src="https://github.com/Nafis71/glide_web/assets/57575805/1cf018e3-685c-4796-ac90-ec32a2a6ae27"></img>
 <br />
 <br />
 
