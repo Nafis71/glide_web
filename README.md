@@ -5,7 +5,7 @@
 
 
 ## Project APK Link
-`Download link-` https://shorturl.at/8aUrg
+`Download link-` https://shorturl.at/vBD1E
 <br />
 ## Screenshots
 `1. Home Page and Web View Page` <br />
